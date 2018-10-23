@@ -1,7 +1,5 @@
 module Main where
 import StringOfDeath
-import Text.PrettyPrint
-import Data.Char
 import System.Console.ANSI
 
 main :: IO ()
@@ -20,7 +18,7 @@ game grid =
 
 
 splitList d [] = return [] 
-splitList d cells = fst l:(splitList d (snd l))		 
+splitList d cells = fst l:(splitList d (snd l))
                      where l = splitAt d cells
 
 

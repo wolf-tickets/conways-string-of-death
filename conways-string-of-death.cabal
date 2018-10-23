@@ -16,12 +16,10 @@ cabal-version:       >=1.10
 executable conways-string-of-death
   hs-source-dirs:      src
   main-is:             Main.hs
-  other-modules:       StringOfDeath, Rainbow, Gloss, Control.Concurrent, Data.List.Split
+  other-modules:       StringOfDeath 
   default-language:    Haskell2010
   build-depends:       base >= 4.7 && < 5	
                      , mtl
                      , text
-		     , Rainbow
-		     , Gloss
-		     , Control.Concurrent
-		     , Data.List.Split	
+                     , Control.Concurrent
+                     , Data.List.Split	

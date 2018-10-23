@@ -1,8 +1,6 @@
 module StringOfDeath where
 
 
-import Rainbow
-import Text.PrettyPrint
 
 -- data type constructor for square game grid with size (dim x dim)
 -- with all blank cells:
