@@ -2,8 +2,6 @@ module StringOfDeath where
 
 
 import Rainbow
-import Graphics.Gloss
---import Data.List.Split
 import Text.PrettyPrint
 
 -- data type constructor for square game grid with size (dim x dim)
@@ -14,13 +12,13 @@ data GameGrid = GameGrid
   } deriving (Show)
 
 newGrid :: Int -> GameGrid
-newGrid n = (GameGrid n (replicate (n * n) 'b'))
+newGrid n = (GameGrid n (replicate (n * n) '_'))
 
 randGrid :: GameGrid
-randGrid = (GameGrid 10 ['d', 'd', 'd', 'g', 'd', 'b', 'b', 'd', 'y', 'd', 'd', 'd', 'd', 'c', 'd', 'r', 'r', 'r', 'd', 'd', 'd', 'd', 'b', 'r','d', 'd', 'd', 'g', 'd', 'b', 'b', 'd', 'y', 'd', 'd', 'd', 'd', 'c', 'd', 'r', 'r', 'r', 'd', 'd', 'c', 'b', 'b', 'r', 'd', 'd', 'd', 'g', 'd', 'b', 'b', 'd', 'y', 'd', 'd', 'd', 'd', 'c', 'd', 'r', 'r', 'r', 'd', 'd', 'c', 'b', 'b', 'r','d', 'd', 'd', 'g', 'd', 'b', 'b', 'd', 'y', 'd', 'd', 'd', 'd', 'c', 'd', 'r', 'r', 'r', 'd', 'd', 'c', 'b', 'b', 'r', 'r' , 'r', 'r', 'r'])
+randGrid = (GameGrid 20 (concat(replicate 4 ['_', '_', '_', 'g', '_', 'b', 'b', '_', 'y', 'r', '_', '_', '_', 'c', 'r', 'r', 'r', 'r', '_', '_', '_', '_', 'b', 'r','_', '_', '_', 'g', '_', 'b', 'b', '_', 'y', '_', '_', '_', '_', 'c', '_', 'r', 'r', 'r', '_', '_', 'c', 'b', 'b', 'r', '_', '_', '_', 'g', '_', 'b', 'b', '_', 'y', '_', 'r', '_', '_', 'c', 'r', 'r', 'r', 'r', '_', '_', 'c', 'b', 'b', 'r','_', '_', '_', 'g', '_', 'b', 'b', '_', 'y', 'r', '_', '_', '_', 'c', '_', 'r', 'r', 'r', '_', '_', 'c', 'b', 'b', 'r', 'r' , 'r', 'r', 'r', 'b'])))
 
 randGrid2 :: GameGrid
-randGrid2 = (GameGrid 4 ['d', 'd', 'd', 'd', 'd', 'g', 'd', 'd', 'd', 'g', 'b', 'd', 'd', 'b', 'd', 'd'])
+randGrid2 = (GameGrid 4 ['_', '_', '_', '_', '_', 'g', '_', '_', '_', 'g', 'b', '_', '_', 'b', '_', '_'])
 
 
 -- compute neighbours in advance, store as tuple of an Int and a [Char]
@@ -136,16 +134,16 @@ liveNeighbours grid indexes = [(cells grid) !! n | n <- indexes]
 --determines the colour of the cell at the given index in the next iteration
 nextCell :: GameGrid -> Int -> Char
 nextCell grid index
-  | (not (cell == 'd')) && (n == 3 || n == 2) =
+  | (not (cell == '_')) && (n == 3 || n == 2) =
       (colourSum (cell:(liveNeighbours grid (cellNeighbours grid index))))
   | (n == 3) =
     (colourSum (liveNeighbours grid (cellNeighbours grid index))) 
-  | otherwise = 'd'
+  | otherwise = '_'
   where
-    n = length(filter(\c -> (not(c == 'd'))) (liveNeighbours grid (cellNeighbours grid index)))
+    n = length(filter(\c -> (not(c == '_'))) (liveNeighbours grid (cellNeighbours grid index)))
     cell = (cells grid !! index)
 
--- figure out the colour of the resulting cell - 'd' is dead (black, or background colour
+-- figure out the colour of the resulting cell - '_' is dead (black, or background colour
 -- 'w' for a 3- way tie ("white"), rgb,
 -- 'p' for an r g tie (r,g,w), 'c' for a green blue tie (cyan), red-green = 'y'
 colourSum ::  [Char] -> Char
